@@ -49,3 +49,17 @@ Overrided equals and hashCode methods in Product class
     }
 
 ```
+
+## Task 3
+
+### Inventory Management Technical Suggestions
+
+- Use Lombok to reduce boilerplate code, such as getters, setters, and constructors.
+- use ResponseEntity for API responses to provide more control over the HTTP response, including status codes and headers.
+- Implement Common Response Wrapper to standardize API responses across the application.
+- Implement API versioning to manage changes in the API more effectively.
+- Use tools like Spotless for code formatting, linting and Checkstyle for maintain code quality.
+- Implement a health check endpoint using Spring Boot Actuator to monitor the application's health.
+- Enhance logging by using SLF4J with Logback for better logging practices.
+- Add unit tests for the new features to ensure functionality and reliability.
+- Improve error handling to provide more meaningful error messages and responses.
