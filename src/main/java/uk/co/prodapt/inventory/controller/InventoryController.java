@@ -54,6 +54,17 @@ public class InventoryController {
 
     }
 
+    @ApiResponse(responseCode = "200", description = "Returns list of all products with availability filter", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Product.class))))
+    @GetMapping("/v2")
+    public List<Product> listWithFilterwithoutDuplicates(
+            @RequestParam(value = "available", required = false) Boolean isAvailable) {
+        return productService.getAll().stream()
+                .filter(product -> isAvailable == null || product.isAvailable() == isAvailable)
+                // .collect(Collectors.toSet())// can use Set to eliminate Duplicates
+                .distinct() // can use for remove duplicates
+                .collect(Collectors.toList());
+    }
+
     @ApiResponse(responseCode = "200", description = "Product returned", content = @Content(schema = @Schema(implementation = Product.class)))
     @GetMapping("/{id}")
     public Product get(@PathVariable Integer id) {
