@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.prodapt.inventory.exception.ProductNotFoundException;
@@ -40,6 +43,15 @@ public class InventoryController {
     @GetMapping
     public List<Product> list() {
         return productService.getAll();
+    }
+
+    @ApiResponse(responseCode = "200", description = "Returns list of all products with availability filter", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Product.class))))
+    @GetMapping("/v1")
+    public List<Product> listWithFilter(@RequestParam(value = "available", required = false) Boolean isAvailable) {
+        return productService.getAll().stream()
+                .filter(product -> isAvailable == null || product.isAvailable() == isAvailable)
+                .collect(Collectors.toList());
+
     }
 
     @ApiResponse(responseCode = "200", description = "Product returned", content = @Content(schema = @Schema(implementation = Product.class)))
