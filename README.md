@@ -23,7 +23,7 @@ project sample coding
 
 ```
 
-    ## Task 2
+## Task 2
 
 - Override equals and hashCode methods in the Product class to ensure proper comparison.
 - Convert `List` to `Set` to eliminate duplicates, or use `distinct()` method in the stream processing.
